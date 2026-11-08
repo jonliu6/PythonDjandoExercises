@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>View Profile Images</title>
+</head>
+<body>
+	<ul>
+        {% for profile in profiles %}
+          {% if profile.profile_image %}
+            <li>
+                <img src="{{ profile.profile_image.url }}" alt="Profile Image" width="100">
+            </li>
+          {% endif %}
+        {% endfor %}
+    </ul>
+</body>
+</html>

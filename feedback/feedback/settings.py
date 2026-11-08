@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'profiles',
     'reviews',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -121,3 +122,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = '/user_files/' #expose the files to the browser, so that we can access them via URL. This is not a good idea for production, but for development, it's fine. In production, you should use a proper media server like Amazon S3 or Google Cloud Storage.
