@@ -125,3 +125,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'uploads'
 MEDIA_URL = '/user_files/' #expose the files to the browser, so that we can access them via URL. This is not a good idea for production, but for development, it's fine. In production, you should use a proper media server like Amazon S3 or Google Cloud Storage.
+
+# SESSION_COOKIE_AGE = 120 # set to 2 minutes. By default, Django sets the session cookie age to 2 weeks (1209600 seconds). Here, we are setting it to 120 seconds for testing purposes. In production, you should set it to a higher value like 2 weeks or more.

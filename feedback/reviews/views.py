@@ -105,6 +105,15 @@ class ReviewListView(ListView):
     model = Review
     context_object_name = "reviews" # default is object_list, but we can change it to reviews for clarity
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        favorite_review_id = self.request.session.get("favorite_review") # safer way to get the favorite review id from the session, returns None if not found; better than request.session["favorite_review"]
+
+        for review in context["reviews"]:
+            review.is_favorite = (str(review.id) == str(favorite_review_id)) # convert both to string for comparison
+
+        return context
+
     # def get_queryset(self):
     #     base_queryset = super().get_queryset()
     #     # filter the queryset based on the query parameter "rating"
@@ -125,3 +134,17 @@ class ReviewDetailView(DetailView):
     model = Review
     # Django automatically use the name of the model in lowercase as the context variable name, which is "review" in this case. We can also explicitly set it using context_object_name.
     context_object_name = "review" # default is object, but we can change it to review for clarity
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        favorite_review_id = self.request.session.get("favorite_review") # safer way to get the favorite review id from the session, returns None if not found; better than request.session["favorite_review"]
+        loaded_review = self.object
+        context["is_favorite"] = (str(loaded_review.id) == str(favorite_review_id)) # convert both to string for comparison
+        return context
+
+class AddFavoriteView(View):
+    def post(self, request):
+        review_id = request.POST.get("review_id")
+        fav_review = Review.objects.get(pk=review_id)
+        request.session["favorite_review"] = review_id # store simple types in session, not complex types like model instances
+        return HttpResponseRedirect(f"/reviews/" + review_id + "/")

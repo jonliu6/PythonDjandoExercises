@@ -6,6 +6,9 @@
     {% for review in reviews %}
       <li>
         <strong>{{ review.user_name }}</strong> - {{ review.rating }} stars
+        {% if review.is_favorite %}
+          <b>&#9825;</b>
+        {% endif %}
         <p>{{ review.review_text }}</p>
       </li>
     {% endfor %}
