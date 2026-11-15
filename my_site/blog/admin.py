@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Author, Tag, Post
+from .models import Author, Tag, Post, Comment
 
 # Register your models here.
 
@@ -8,6 +8,12 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ("title", "author", "date")
     prepopulated_fields = {"slug": ("title",)}  # Automatically populate the slug field based on the title field
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("user_name", "user_email", "post")
+    list_filter = ("post",)
+    search_fields = ("user_name", "user_email", "text")
+
 admin.site.register(Author)
 admin.site.register(Tag)
 admin.site.register(Post, PostAdmin)
+admin.site.register(Comment, CommentAdmin)
